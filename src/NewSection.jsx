@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
-import Background from "./assets/layered-waves-haikei.svg";
+
 import BurgerEmoji from "./assets/Rectangle 8.png"; // Add your burger emoji image here
 
 const textVariants = {
@@ -52,7 +52,7 @@ function NewSection() {
   }, [inView, textControls, imageControls, cardControls]);
 
   return (
-    <section id="new-section" className="relative py-12 bg-no-repeat bg-cover mb-11" style={{ backgroundImage: `url(${Background})` }}>
+    <section id="new-section" className="relative py-12 bg-no-repeat bg-cover mb-11 bg-[url('./assets/layered-waves-haikei.svg')]">
       <div className="container mx-auto px-5 sm:px-6 lg:px-28 mt-[30rem] md:mt-80 lg:mt-80">
         <div className="text-center mb-12">
           <motion.h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-4 text-label-text" variants={textVariants} initial="hidden" animate={textControls} transition={{ duration: 1 }}>
