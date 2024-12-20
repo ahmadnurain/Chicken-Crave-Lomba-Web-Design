@@ -131,6 +131,16 @@ function Navbar({ toggleCart }) {
             {activeSection === section && <span className="absolute bottom-0 left-0 w-full border-b-4 border-orange-600" style={{ transform: "translateY(4px)" }}></span>}
           </button>
         ))}
+
+        {/* Tambahkan Cart Button di menu mobile */}
+        {!isCheckoutPage && (
+          <button className="relative flex items-center justify-center gap-2 bg-orange-600 text-white py-2 rounded-xl font-bold mt-4" onClick={toggleCart}>
+            <FiShoppingCart size={20} />
+            <span>Cart</span>
+            {cartItems.length > 0 && <span className="absolute top-1 right-1 bg-red-600 text-xs rounded-full px-2">{cartItems.length}</span>}
+          </button>
+        )}
+
         <div className="flex flex-col gap-4 mt-4">
           <button className="group relative border-orange-600 border-2 rounded-2xl text-orange-600 px-4 py-2 font-bold overflow-hidden hover:text-white duration-500 ease-in-out w-full">
             <span className="relative z-10">Login</span>
