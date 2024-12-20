@@ -7,7 +7,6 @@ import BlurFade from "@/components/magicui/blur-fade";
 
 import OurMenu from "./OurMenu";
 import ContactUs from "./Contactus";
-import { MarqueeDemo } from "./Marquee";
 
 const scrollVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -55,9 +54,6 @@ function Home() {
       </section>
       <section id="contact">
         <ContactUs />
-      </section>
-      <section>
-        <MarqueeDemo />
       </section>
     </>
   );
