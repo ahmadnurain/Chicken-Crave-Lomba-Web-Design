@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { FiMenu, FiX, FiShoppingCart } from "react-icons/fi";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation
+import { useLocation } from "react-router-dom"; // Import useLocation
 import CartContext from "./Cartcontext";
 
 const navbarVariants = {
@@ -18,11 +18,11 @@ const dropdownVariants = {
 const sections = ["home", "about", "ourmenu", "contact"];
 
 function Navbar({ toggleCart }) {
+  const { pathname } = useLocation(); // Mendapatkan path saat ini
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const location = useLocation(); // Get current route
   const { cartItems } = useContext(CartContext);
 
   useEffect(() => {
@@ -58,7 +58,17 @@ function Navbar({ toggleCart }) {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const isCheckoutPage = location.pathname === "/checkout"; // Check if the current route is checkout
+  const isCheckoutPage = pathname === "/checkout"; // Cek apakah berada di halaman checkout
+
+  const handleSectionClick = (section) => {
+    // Jika berada di halaman selain /menu dan /checkout, arahkan ke #idsection
+    if (pathname === "/menu" || pathname === "/checkout") {
+      window.location.href = "/#home"; // Kembali ke halaman utama
+    } else {
+      // Jika berada di halaman utama atau halaman lain, arahkan ke #section tertentu
+      window.location.href = `/#${section}`;
+    }
+  };
 
   return (
     <motion.header
@@ -72,12 +82,17 @@ function Navbar({ toggleCart }) {
         <h1 className="text-2xl font-bold text-text-color">CHICKEN CRAVE</h1>
         <nav className="hidden md:flex gap-10">
           {sections.map((section) => (
-            <Link to={`/${section}`} key={section} className={`relative cursor-pointer hover:underline ${activeSection === section ? "text-orange-600" : ""}`} onClick={() => setIsMenuOpen(false)}>
+            <button
+              key={section}
+              className={`relative cursor-pointer hover:underline ${activeSection === section ? "text-orange-600" : ""}`}
+              onClick={() => handleSectionClick(section)} // Panggil fungsi saat klik
+            >
               {section.charAt(0).toUpperCase() + section.slice(1)}
               {activeSection === section && <span className="absolute bottom-0 left-0 w-full border-b-4 border-orange-600" style={{ transform: "translateY(4px)" }}></span>}
-            </Link>
+            </button>
           ))}
         </nav>
+
         <div className="hidden md:flex gap-6 items-center">
           {!isCheckoutPage && ( // Conditionally render the Cart button
             <button className="relative" onClick={toggleCart}>
@@ -107,10 +122,14 @@ function Navbar({ toggleCart }) {
         transition={{ duration: 0.3 }}
       >
         {sections.map((section) => (
-          <Link to={`/${section}`} key={section} className={`relative cursor-pointer hover:underline py-2 text-center ${activeSection === section ? "text-orange-600" : ""}`} onClick={() => setIsMenuOpen(false)}>
+          <button
+            key={section}
+            className={`relative cursor-pointer hover:underline py-2 text-center ${activeSection === section ? "text-orange-600" : ""}`}
+            onClick={() => handleSectionClick(section)} // Panggil fungsi saat klik
+          >
             {section.charAt(0).toUpperCase() + section.slice(1)}
             {activeSection === section && <span className="absolute bottom-0 left-0 w-full border-b-4 border-orange-600" style={{ transform: "translateY(4px)" }}></span>}
-          </Link>
+          </button>
         ))}
         <div className="flex flex-col gap-4 mt-4">
           <button className="group relative border-orange-600 border-2 rounded-2xl text-orange-600 px-4 py-2 font-bold overflow-hidden hover:text-white duration-500 ease-in-out w-full">
